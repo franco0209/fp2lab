@@ -4,34 +4,54 @@ public class Soldado {
     private int fila;
     private String columna;
     private int columna2;
-    public void setNombre( String n){
-    nombre = n;
+    private boolean ejercito;
+
+    public void setNombre(String n) {
+        nombre = n;
     }
-    public void setFila(int f){
-    fila = f;
+
+    public void setFila(int f) {
+        fila = f;
     }
-    public void setColumna(String c){
-    columna = c;
+
+    public void setColumna(String c) {
+        columna = c;
     }
-    public void setColumna2(int c2){
-    columna2 = c2;
+
+    public void setColumna2(int c2) {
+        columna2 = c2;
     }
-    public void setVida(int v){
-    vida = v;
+
+    public void setVida(int v) {
+        vida = v;
     }
-    public String getNombre(){
+
+    public void setEjercito(boolean b) {
+        ejercito = b;
+    }
+
+    public String getNombre() {
         return nombre;
     }
-    public int getFila(){
+
+    public int getFila() {
         return fila;
     }
-    public String getColumna(){
+
+    public String getColumna() {
         return columna;
     }
-    public int getVida(){
+
+    public int getVida() {
         return vida;
     }
-    public int getColumna2(){
+
+    public int getColumna2() {
         return columna2;
     }
+
+    public boolean getEjercito() {
+        return ejercito;
+    }
+
 }
