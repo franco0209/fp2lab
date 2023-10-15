@@ -1,20 +1,22 @@
 
 //Autor: Franco Jesus Cahua Soto
-//Lab08
+//Lab9
 import java.util.*;
 
 public class Videojuego6 {
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
         Soldado[][] tablero = new Soldado[10][10];
-        int mayorVida, posMayorVida, sumaVidas, mayorVida2, posMayorVida2, sumaVidas2;
+        int mayorEsta, posMayorEsta, sumaEsta, mayorEsta2, posMayorEsta2, sumaEsta2, sumaVidas, sumaVidas2;
         String c = "n";
         do {
-            mayorVida = 0;
-            posMayorVida = 0;
+            mayorEsta = 0;
+            posMayorEsta = 0;
+            sumaEsta = 0;
+            mayorEsta2 = 0;
+            posMayorEsta2 = 0;
+            sumaEsta2 = 0;
             sumaVidas = 0;
-            mayorVida2 = 0;
-            posMayorVida2 = 0;
             sumaVidas2 = 0;
             Soldado[] soldados1 = new Soldado[((int) (Math.random() * 10)) + 1];
             Soldado[] soldados2 = new Soldado[((int) (Math.random() * 10)) + 1];
@@ -26,30 +28,36 @@ public class Videojuego6 {
             for (int i = 0; i < soldados.length; i++) {
                 tablero[soldados[i].getFila() - 1][(soldados[i].getColumna2()) - 1] = soldados[i];
                 if (i < soldados1.length) {
+                    sumaEsta = sumaEsta
+                            + (soldados[i].getVida() * soldados[i].getNivelDefensa() + soldados[i].getNivelAtaque());
                     sumaVidas = sumaVidas + soldados[i].getVida();
-                    if (soldados[i].getVida() > mayorVida) {
-                        mayorVida = soldados[i].getVida();
-                        posMayorVida = i;
+                    if ((soldados[i].getVida() * soldados[i].getNivelDefensa()
+                            + soldados[i].getNivelAtaque()) > mayorEsta) {
+                        mayorEsta = (soldados[i].getVida() * soldados[i].getNivelDefensa()
+                                + soldados[i].getNivelAtaque());
+                        posMayorEsta = i;
                     }
                 } else {
+                    sumaEsta2 = sumaEsta2
+                            + (soldados[i].getVida() * soldados[i].getNivelDefensa() + soldados[i].getNivelAtaque());
                     sumaVidas2 = sumaVidas2 + soldados[i].getVida();
-                    if (soldados[i].getVida() > mayorVida2) {
-                        mayorVida2 = soldados[i].getVida();
-                        posMayorVida2 = i;
+                    if ((soldados[i].getVida() * soldados[i].getNivelDefensa()
+                            + soldados[i].getNivelAtaque()) > mayorEsta2) {
+                        mayorEsta2 = (soldados[i].getVida() * soldados[i].getNivelDefensa()
+                                + soldados[i].getNivelAtaque());
+                        posMayorEsta2 = i;
                     }
                 }
             }
             System.out.println("Ejercito 1: ");
             mostrarLista(soldados1);
             System.out.println("El soldado con mayor nivel de vida: ");
-            System.out.println(posMayorVida);
-            mostrar(soldados, posMayorVida);
+            mostrar(soldados, posMayorEsta);
             System.out.println("Promedio de vida de los soldados: " + ((sumaVidas + 0.0) / (soldados1.length + 0.0)));
             System.out.println("Ejercito 2: ");
             mostrarLista(soldados2);
             System.out.println("El soldado con mayor nivel de vida: ");
-            System.out.println(posMayorVida2);
-            mostrar(soldados, posMayorVida2);
+            mostrar(soldados, posMayorEsta2);
             System.out.println("Promedio de vida de los soldados: " + ((sumaVidas2 + 0.0) / (soldados2.length + 0.0)));
             imprimirTablero(tablero);
             System.out.println("Ordenamiento ejercito 1 (burbuja): ");
@@ -58,15 +66,19 @@ public class Videojuego6 {
             System.out.println("Ordenamiento ejercito 2 (insercción): ");
             ordenarInserccion(soldados2);
             mostrarLista(soldados2);
-            if (sumaVidas > sumaVidas2) {
-                System.out.println("Gana el ejercito 1, sus soldados suman " + sumaVidas
-                        + " puntos de vida, mientras el adversario suma " + sumaVidas2);
-            } else if (sumaVidas < sumaVidas2) {
-                System.out.println("Gana el ejercito 2, sus soldados suman " + sumaVidas2
-                        + " puntos de vida, mientras el adversario suma " + sumaVidas);
+            if (sumaEsta > sumaEsta2) {
+                System.out.println(
+                        "Gana el ejercito 1, sus soldados tienen como estadisticas generales un puntaje de  " + sumaEsta
+                                + " , mientras el adversario suma " + sumaEsta2);
+            } else if (sumaEsta < sumaEsta2) {
+                System.out.println(
+                        "Gana el ejercito 2, sus soldados tienen como estadisticas generales un puntaje de " + sumaEsta2
+                                + " , mientras el adversario suma " + sumaEsta);
             } else {
-                System.out.println("Empate, los soldados del ejercito 1 suman " + sumaVidas
-                        + " puntos de vida, mientras el adversario suma " + sumaVidas2);
+                System.out
+                        .println("Empate, los soldados del ejercito 1 tienen como estadisticas generales un puntaje de "
+                                + sumaEsta
+                                + " , mientras el adversario suma " + sumaEsta2);
 
             }
             System.out.println("¿Desea generar otro tablero? (s/n)");
@@ -119,8 +131,6 @@ public class Videojuego6 {
     }
 
     public static void completarArray(Soldado[] soldados, Soldado[] soldados1, Soldado[] soldados2) {
-        int alfa = 0;
-        int beta = 0;
         for (int i = 0; i < soldados.length; i++) {
             soldados[i] = new Soldado();
             soldados[i].setVida((int) (Math.random() * 5) + 1);
@@ -132,15 +142,13 @@ public class Videojuego6 {
             if (i < soldados1.length) {
                 soldados[i].setNombre("Soldado" + i + "X1");
                 soldados[i].setEjercito(true);
-                soldados1[alfa] = new Soldado();
-                soldados1[alfa] = soldados[i];
-                alfa++;
+                soldados1[i] = new Soldado();
+                soldados1[i] = soldados[i];
             } else {
                 soldados[i].setNombre("Soldado" + (i - soldados1.length) + "X2");
                 soldados[i].setEjercito(false);
-                soldados2[beta] = new Soldado();
-                soldados2[beta] = soldados[i];
-                beta++;
+                soldados2[i - soldados1.length] = new Soldado();
+                soldados2[i - soldados1.length] = soldados[i];
             }
         }
     }
