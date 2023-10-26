@@ -1,12 +1,12 @@
 
 //Autor: Franco Jesus Cahua Soto
-//Lab08
+//Lab12
 import java.util.*;
 
-public class Videojuego8 {
+public class Videojuego9 {
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
-        Soldado[][] tablero = new Soldado[10][10];
+        Soldado[][] tablero = new Soldado[11][11];
         int mayorVida, posMayorVida, sumaVidas, mayorVida2, posMayorVida2, sumaVidas2;
         String c = "n";
         do {
@@ -21,7 +21,7 @@ public class Videojuego8 {
             Soldado[] soldados = new Soldado[soldados1.length + soldados2.length];
             completarArray(soldados, soldados1, soldados2);
             for (int i = 0; i < soldados.length; i++) {
-                tablero[soldados[i].getFila() - 1][(soldados[i].getColumna2()) - 1] = soldados[i];
+                tablero[soldados[i].getFila()][soldados[i].getColumna2()] = soldados[i];
                 if (i < soldados1.length) {
                     sumaVidas = sumaVidas + soldados[i].getVida();
                     if (soldados[i].getVida() > mayorVida) {
@@ -67,7 +67,9 @@ public class Videojuego8 {
                         + " puntos de vida, mientras el adversario suma " + sumaVidas2);
 
             }
-            // batalla
+            // menu
+            int nmenu=menu();
+            if(nmenu==1){
             System.out.println("INICIA LA BATALLA REAL!");
             System.out.println("Ejercito 1: X");
             System.out.println("Ejercito 2: O");
@@ -77,13 +79,8 @@ public class Videojuego8 {
                 System.out.println("Soldados activos del ejercito 2: " + vidas[1]);
                 turnoBatalla(tablero, true, vidas);
                 imprimirTablero(tablero);
-                System.out.println("¿ Desea recordar las estadísticas iniciales de los ejercitos? (s/n)");
-                String pregunta = scan.next();
-                if (pregunta.equals("s")) {
-                    System.out.println("Ejercito 1: ");
-                    mostrarLista(soldados1);
-                    System.out.println("Ejercito 2: ");
-                    mostrarLista(soldados2);
+                if((vidas[0] == 0) || (vidas[1] == 0)){
+                    break;
                 }
                 turnoBatalla(tablero, false, vidas);
                 imprimirTablero(tablero);
@@ -93,7 +90,15 @@ public class Videojuego8 {
             } else {
                 System.out.println("Gana el jugador 1. El ejercito 2 ha sido eliminado");
             }
-            // finbatalla
+            }
+            else if(nmenu==2){
+                System.out.println("Juego personalizado");
+            }
+            else{
+                break;
+            }
+
+            // finmenu
 
             System.out.println("¿Desea generar otro tablero? (s/n)");
             c = scan.next();
@@ -103,23 +108,51 @@ public class Videojuego8 {
             }
         } while (c.equals("s"));
     }
-
+    public static int menu(){
+        Scanner scan=new Scanner(System.in);
+        String opt;
+        System.out.println("1. Juego rápido.\n2. Juego personalizado.\n3. Salir.");
+        opt=scan.next();
+        while(!opt.equals("1")&&!opt.equals("2")&&!opt.equals("3")){
+            System.out.println("Opción no válida, ingrese nuevamente:");
+            opt=scan.next();
+        }
+        return Integer.parseInt(opt);
+    }
     public static void imprimirTablero(Soldado[][] tablero) {
         for (int fila = 0; fila < tablero.length; fila++) {
             for (int columna = 0; columna < tablero[fila].length; columna++) {
                 if ((tablero[fila][columna] != null)) {
-                    if (tablero[fila][columna].getVida() != -1) {
                         if (tablero[fila][columna].getEjercito()) {
                             System.out.print("|X");
-                        } else {
+                        }
+                        else {
                             System.out.print("|O");
                         }
+                }
+                else {
+                    if(fila==0){
+                        if(columna==0){
+                           System.out.print(" "+"\t "); 
+                        }
+                        else{
+                            System.out.print(letraNum(columna)+" ");
+                        }
                     }
-                } else {
-                    System.out.print("|_");
+                    else if(columna==0){
+                        System.out.print(fila+"\t");
+                    }
+                    else{
+                        System.out.print("|_");
+                    }
                 }
             }
-            System.out.println("|");
+            if(fila!=0){
+                System.out.println("|");
+            }
+            else{
+                System.out.println("");
+            }
         }
     }
 
@@ -129,8 +162,8 @@ public class Videojuego8 {
     }
 
     public static String letraNum(int n) {
-        String[] letras = { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J" };
-        return letras[n - 1];
+        String[] letras = {" ", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J" };
+        return letras[n];
     }
 
     public static void completarArray(Soldado[] soldados, Soldado[] soldados1, Soldado[] soldados2) {
@@ -194,6 +227,16 @@ public class Videojuego8 {
         System.out.println("Ingrese la columna:");
         return toNum(scan.next());
     }
+    public static String logo(int a){
+        String f="A";
+        if(a==1){
+            f= "X";
+        }
+        else if(a==2){
+            f="O";
+        }
+        return f;
+    }
 
     public static void turnoBatalla(Soldado[][] tablero, boolean ejercito, int[] vidas) {
         int turno;
@@ -205,7 +248,7 @@ public class Videojuego8 {
             turno = 2;
             enemigo = 1;
         }
-        System.out.println("Turno del jugador " + turno + ":");
+        System.out.println("Turno del jugador " + turno + " "+logo(turno)+" "+ ":");
         System.out.println("Eliga la posición del soldado que utilizará: ");
         int filaSol1 = fila();
         int colSol1 = columna();
@@ -216,14 +259,14 @@ public class Videojuego8 {
                 filaSol1 = fila();
                 colSol1 = columna();
             } else {
-                if (tablero[filaSol1 - 1][colSol1 - 1] == null) {
+                if (tablero[filaSol1 ][colSol1 ] == null) {
                     System.out.println("Soldado inválido, casilla vacía. ");
                     System.out.println("Eliga la posición del soldado que utilizará: ");
                     filaSol1 = fila();
                     colSol1 = columna();
                 } else {
-                    if ((!(tablero[filaSol1 - 1][colSol1 - 1].getEjercito()) || (ejercito))
-                            && (!(ejercito) || (tablero[filaSol1 - 1][colSol1 - 1].getEjercito()))) {
+                    if ((!(tablero[filaSol1 ][colSol1 ].getEjercito()) || (ejercito))
+                            && (!(ejercito) || (tablero[filaSol1 ][colSol1 ].getEjercito()))) {
                         System.out.println("Soldado válido.");
                         System.out.println("Fila: " + filaSol1);
                         System.out.println("Columna: " + letraNum(colSol1));
@@ -247,17 +290,17 @@ public class Videojuego8 {
                 filaMov1 = fila();
                 colMov1 = columna();
             } else {
-                if (tablero[filaMov1 - 1][colMov1 - 1] == null) {
+                if (tablero[filaMov1 ][colMov1 ] == null) {
                     System.out.println("Movimiento válido: ");
                     System.out.println("Fila: " + filaMov1);
                     System.out.println("Columna: " + letraNum(colMov1));
-                    tablero[filaMov1 - 1][colMov1 - 1] = new Soldado();
-                    tablero[filaMov1 - 1][colMov1 - 1] = tablero[filaSol1 - 1][colSol1 - 1];
-                    tablero[filaSol1 - 1][colSol1 - 1] = null;
+                    tablero[filaMov1 ][colMov1 ] = new Soldado();
+                    tablero[filaMov1 ][colMov1 ] = tablero[filaSol1 ][colSol1 ];
+                    tablero[filaSol1 ][colSol1 ] = null;
                     break;
                 } else {
-                    if ((!(tablero[filaMov1 - 1][colMov1 - 1].getEjercito()) || (ejercito))
-                            && (!(ejercito) || (tablero[filaMov1 - 1][colMov1 - 1].getEjercito()))) {
+                    if ((!(tablero[filaMov1 ][colMov1 ].getEjercito()) || (ejercito))
+                            && (!(ejercito) || (tablero[filaMov1 ][colMov1 ].getEjercito()))) {
                         System.out.println("Movimiento inválido, ya hay un aliado en esa posición.");
                         System.out.println("Eliga la posición para realizar el movimiento: ");
                         filaMov1 = fila();
@@ -266,9 +309,9 @@ public class Videojuego8 {
                         System.out.println("Movimiento válido: ");
                         System.out.println("Fila: " + filaMov1);
                         System.out.println("Columna: " + letraNum(colMov1));
-                        System.out.println("Batalla: ");
-                        int vida1 = tablero[filaSol1 - 1][colSol1 - 1].getVida();
-                        int vida2 = tablero[filaMov1 - 1][colMov1 - 1].getVida();
+                        System.out.println(" ¡EMPIEZA UNA BATALLA!");
+                        int vida1 = tablero[filaSol1 ][colSol1 ].getVida();
+                        int vida2 = tablero[filaMov1 ][colMov1 ].getVida();
                         int suma = vida1 + vida2;
                         int random = (int) ((Math.random() * suma) + 1);
                         System.out.println("Posibilidades de ganar : 1-" + vida1 + "  " + (vida1 * 100 / suma) + "%");
@@ -277,10 +320,10 @@ public class Videojuego8 {
                         System.out.println("Random:" + random);
                         if (random <= vida1) {
                             System.out.println("Gana el jugador: " + turno);
-                            tablero[filaMov1 - 1][colMov1 - 1] = tablero[filaSol1 - 1][colSol1 - 1];
-                            tablero[filaMov1 - 1][colMov1 - 1]
-                                    .setVida((tablero[filaMov1 - 1][colMov1 - 1].getVida()) + 1);
-                            tablero[filaSol1 - 1][colSol1 - 1] = null;
+                            tablero[filaMov1 ][colMov1 ] = tablero[filaSol1 ][colSol1 ];
+                            tablero[filaMov1 ][colMov1 ]
+                                    .setVida((tablero[filaMov1 ][colMov1 ].getVida()) + 1);
+                            tablero[filaSol1 ][colSol1 ] = null;
                             if (ejercito) {
                                 vidas[1]--;
                             } else {
@@ -288,9 +331,9 @@ public class Videojuego8 {
                             }
                         } else {
                             System.out.println("Gana el jugador: " + enemigo);
-                            tablero[filaSol1 - 1][colSol1 - 1] = null;
-                            tablero[filaMov1 - 1][colMov1 - 1]
-                                    .setVida((tablero[filaMov1 - 1][colMov1 - 1].getVida()) + 1);
+                            tablero[filaSol1 ][colSol1 ] = null;
+                            tablero[filaMov1 ][colMov1 ]
+                                    .setVida((tablero[filaMov1 ][colMov1 ].getVida()) + 1);
                             if (ejercito) {
                                 vidas[0]--;
                             } else {
