@@ -1,5 +1,10 @@
 public class Soldado {
+
+    //Atributos de la clase
+
     private String nombre;
+    private int nivelAtaque;
+    private int nivelDefensa;
     private int vida;
     private int fila;
     private String columna;
@@ -10,9 +15,6 @@ public class Soldado {
     private int velocidad;
     private boolean vive;
     private int vidaActual;
-    private int nivelAtaque;
-    private int nivelDefensa;
-    private int nivelVida;
 
 
     // Accesores y mutadores
@@ -22,16 +24,11 @@ public class Soldado {
         vidaActual = vida;
     }
 
-    public Soldado(int v) {
-        vida = v;
-        velocidad = 0;
-        vidaActual = vida;
-    }
-
-    public Soldado(int v, int ve) {
-        vida = v;
-        velocidad = ve;
-        vidaActual = vida;
+    public Soldado(String no, int vi, int atq, int def) {
+        nombre = no ;
+        vida = vi;
+        nivelAtaque=atq;
+        nivelDefensa=def;
     }
 
     public void setNombre(String n) {

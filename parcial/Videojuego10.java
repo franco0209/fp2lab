@@ -3,7 +3,7 @@
 //Lab12
 import java.util.*;
 
-public class Videojuego9 {
+public class Videojuego10 {
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
         Soldado[][] tablero = new Soldado[11][11];
@@ -23,9 +23,11 @@ public class Videojuego9 {
             Soldado.total2 = ((int) (Math.random() * 10)) + 1;
             Soldado.total= Soldado.total1+Soldado.total2;
             completarArray(soldados, soldados1, soldados2);
-            for (int i = 0; i < Soldado.total; i++) {
-                tablero[soldados[i].getFila()][soldados[i].getColumna2()] = soldados[i];
-                if (i < Soldado.total1) {
+            int i=0;
+            while(i<soldados.length){
+                if(soldados[i]!=null){
+                    tablero[soldados[i].getFila()][soldados[i].getColumna2()] = soldados[i];
+                    if (i < Soldado.total1) {
                     sumaVidas = sumaVidas + soldados[i].getVida();
                     if (soldados[i].getVida() > mayorVida) {
                         mayorVida = soldados[i].getVida();
@@ -38,6 +40,8 @@ public class Videojuego9 {
                         posMayorVida2 = i;
                     }
                 }
+                }
+                i++;
             }
             System.out.println("Ejercito 1: ");
             mostrarLista(soldados1);
@@ -77,70 +81,21 @@ public class Videojuego9 {
                     jugar(tablero);
                 }
                 else if(nmenu==2){
-                    int nmenu2= menu2();
-                    switch(nmenu2) {
-                        case 1:
-                          System.out.println("Opción seleccionada para crear soldado.");
-                          soldados[Soldado.total]=new Soldado();
-                          System.out.println("Ingrese la vida que desee que tenga el soldado que esta creando: ");
-                          int vidanueva=scan.nextInt();
-                          soldados[Soldado.total].setVida(vidanueva);
-                          System.out.println("Ingrese la fila que desee que tenga el soldado que esta creando: ");
-                          int filanueva=scan.nextInt();
-                          soldados[Soldado.total].setFila(vidanueva);
-                          System.out.println("Ingrese la columna que desee que tenga el soldado que esta creando: ");
-                          String columnanueva=scan.next();
-                          soldados[Soldado.total].setFila(vidanueva);
-                          soldados[i].setFila((int) (Math.random() * 10) + 1);
-                          soldados[i].setColumna2((int) (Math.random() * 10) + 1);
-                          soldados[i].setColumna(letraNum((soldados[i].getColumna2())));
-                          break;
-                        case 2:
-                          System.out.println("i es dos.");
-                          break;
-                        case 3:
-                          System.out.println("i es tres.");
-                          break;
-                        case 4:
-                          System.out.println("i es tres.");
-                          break;
-                        case 5:
-                          System.out.println("i es tres.");
-                          break;
-                        case 6:
-                          System.out.println("i es tres.");
-                          break;
-                        case 7:
-                          System.out.println("i es tres.");
-                          break;
-                        case 8:
-                          System.out.println("i es tres.");
-                          break;
-                        case 9:
-                          System.out.println("i es tres.");
-                          break;
-                        case 10:
-                          System.out.println("i es tres.");
-                          break;
-                        default:
-                          break;
-                      }
-                }
+                    int nmenu2= menu2();}
                 else{
                     break;
                 }
                 nmenu=menu();
             }
-            
             // finmenu
-
             System.out.println("¿Desea generar otro tablero? (s/n)");
             c = scan.next();
             while (!(c.equals("s")) && !(c.equals("n"))) {
                 System.out.println("Carácter inválido, solo se reconoce: (s/n). Intente nuevamente:");
                 c = scan.next();
             }
-        } while (c.equals("s"));
+        }
+        while (c.equals("s"));
     }
     public static void jugar(Soldado[][] tablero){
         System.out.println("INICIA LA BATALLA REAL!");
@@ -261,15 +216,19 @@ public class Videojuego9 {
             if(soldados[i]!=null){
                 int j = 0;
                 while (j < i) {
-                    if ((soldados[j].getFila() == soldados[i].getFila())
-                            && (soldados[j].getColumna2() == soldados[i].getColumna2())) {
-                        soldados[i].setFila((int) (Math.random() * 10) + 1);
-                        soldados[i].setColumna2((int) (Math.random() * 10) + 1);
-                        soldados[i].setColumna(letraNum((soldados[i].getColumna2())));
-                        j = 0;
-                    } else {
-                        j++;
+                    if(soldados[j]!=null){
+                        System.out.println(j);
+                        if ((soldados[j].getFila() == soldados[i].getFila())&& (soldados[j].getColumna2() == soldados[i].getColumna2())) {
+                            soldados[i].setFila((int) (Math.random() * 10) + 1);
+                            soldados[i].setColumna2((int) (Math.random() * 10) + 1);
+                            soldados[i].setColumna(letraNum((soldados[i].getColumna2())));
+                            j = 0;
+                        } 
+                        else {
+                            j++;
+                        }
                     }
+                    j++;
                 }
             }
         }
