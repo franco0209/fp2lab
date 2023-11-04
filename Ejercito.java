@@ -4,6 +4,8 @@ public class Ejercito {
     private int columna2;
     private boolean reino;
     private String reino2;
+    private int numSoldados;
+
     public static int totalEjercitos;
     public static int totalEjercitos1;
     public static int totalEjercitos2;  
@@ -35,6 +37,11 @@ public class Ejercito {
         reino2 = r2;
     }
 
+    public void setNumSoldados(int nS) {
+        numSoldados = nS;
+    }
+    
+
     //Métodos accesores
 
     public int getFila() {
@@ -55,6 +62,10 @@ public class Ejercito {
     
     public String getReino2() {
         return reino2;
+    }
+
+    public int getNumSoldados() {
+        return numSoldados;
     }
 
 }

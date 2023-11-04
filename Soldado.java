@@ -13,6 +13,9 @@ public class Soldado {
     private int nivelAtaque;
     private int nivelDefensa;
     private int nivelVida;
+    public static int total1;
+    public static int total2;
+
 
 
     // Accesores y mutadores

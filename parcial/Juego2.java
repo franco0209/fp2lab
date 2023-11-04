@@ -17,6 +17,192 @@ public class Juego2 {
         while(i<1||i>listaOpciones.length);
         return (i-1);
     }
+    //conversiones
+    //letra a número
+    public static int convertir(String letra){
+        String[] letras = { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J" };
+        for (int i = 0; i < letras.length; i++) {
+            if (letra.equals(letras[i])) {
+                return (i + 1);
+            }
+        }
+        return -1;
+    }
+    //número a letra
+    public static String convertir(int numero){
+        String[] letras = {" ", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J" };
+        return letras[numero];
+    }
+    
+    //fila
+    public static int fila() {
+        Scanner scan = new Scanner(System.in);
+        System.out.println("Ingrese la fila:");
+        return scan.nextInt();
+    }
+    
+    //columna
+    public static int columna() {
+        Scanner scan = new Scanner(System.in);
+        System.out.println("Ingrese la columna:");
+        return convertir(scan.next());
+    }
+    
+    //turno batalla
+    
+    public static void turnoBatalla(Ejercito[][] tablero, boolean ejercito) {
+        int turno;
+        int enemigo;
+        if (ejercito) {
+            turno = 1;
+            enemigo = 2;
+        } else {
+            turno = 2;
+            enemigo = 1;
+        }
+        System.out.println("Turno del jugador " + turno + ":");
+        System.out.println("Eliga la posición del soldado que utilizará: ");
+        int filaSol1 = fila();
+        int colSol1 = columna();
+        while (true) {
+            if (filaSol1 > 10 || filaSol1 < 1 || colSol1 == -1) {
+                System.out.println("Soldado inválido, fuera de los límites.");
+                System.out.println("Eliga la posición del soldado que utilizará: ");
+                filaSol1 = fila();
+                colSol1 = columna();
+            } else {
+                if (tablero[filaSol1 ][colSol1 ] == null) {
+                    System.out.println("Soldado inválido, casilla vacía. ");
+                    System.out.println("Eliga la posición del soldado que utilizará: ");
+                    filaSol1 = fila();
+                    colSol1 = columna();
+                } else {
+                    if ((!(tablero[filaSol1 ][colSol1 ].getReino()) || (ejercito))
+                            && (!(ejercito) || (tablero[filaSol1 ][colSol1 ].getReino()))) {
+                        System.out.println("Soldado válido.");
+                        System.out.println("Fila: " + filaSol1);
+                        System.out.println("Columna: " + convertir(colSol1));
+                        break;
+                    } else {
+                        System.out.println("Soldado inválido, soldado enemigo. ");
+                        System.out.println("Eliga la posición del soldado que utilizará: ");
+                        filaSol1 = fila();
+                        colSol1 = columna();
+                    }
+                }
+            }
+        }
+        System.out.println("Eliga la posición para realizar el movimiento: ");
+        int filaMov1 = fila();
+        int colMov1 = columna();
+        while (true) {
+            if (filaMov1 > 10 || filaMov1 < 1 || colMov1 == -1) {
+                System.out.println("Movimiento inválido, fuera de los límites.");
+                System.out.println("Eliga la posición para realizar el movimiento: ");
+                filaMov1 = fila();
+                colMov1 = columna();
+            } else {
+                if (tablero[filaMov1 ][colMov1 ] == null) {
+                    System.out.println("Movimiento válido: ");
+                    System.out.println("Fila: " + filaMov1);
+                    System.out.println("Columna: " + convertir(colMov1));
+                    tablero[filaMov1 ][colMov1 ] = new Ejercito();
+                    tablero[filaMov1 ][colMov1 ] = tablero[filaSol1 ][colSol1 ];
+                    tablero[filaSol1 ][colSol1 ] = null;
+                    break;
+                } else {
+                    if ((!(tablero[filaMov1 ][colMov1 ].getReino()) || (ejercito))
+                            && (!(ejercito) || (tablero[filaMov1 ][colMov1 ].getReino()))) {
+                        System.out.println("Movimiento inválido, ya hay un aliado en esa posición.");
+                        System.out.println("Eliga la posición para realizar el movimiento: ");
+                        filaMov1 = fila();
+                        colMov1 = columna();
+                    } else {
+                        System.out.println("Movimiento válido: ");
+                        System.out.println("Fila: " + filaMov1);
+                        System.out.println("Columna: " + convertir(colMov1));
+                        System.out.println(" ¡EMPIEZA UNA BATALLA!");
+                        if (batalla(null)) {
+                            System.out.println("Gana el jugador: " + turno);
+                            tablero[filaMov1 ][colMov1 ] = tablero[filaSol1 ][colSol1 ];
+                            tablero[filaSol1 ][colSol1 ] = null;
+                            if (ejercito) {
+                                Ejercito.totalEjercitos2--;
+                            } else {
+                                Ejercito.totalEjercitos1--;
+                            }
+                        } else {
+                            System.out.println("Gana el jugador: " + enemigo);
+                            tablero[filaSol1 ][colSol1 ] = null;
+                            if (ejercito) {
+                                Ejercito.totalEjercitos1--;
+                            } else {
+                                Ejercito.totalEjercitos2--;
+                            }
+                        }
+                        break;
+                    }
+                }
+            }
+        }
+    }
+    //batalla
+    public static boolean batalla(Soldado[][] tablero){
+        return false;
+    }
+    //imprimir tablero de ejercitos
+    public static void imprimirTablero(Ejercito[][] tablero) {
+        for (int fila = 0; fila < tablero.length; fila++) {
+            for (int columna = 0; columna < tablero[fila].length; columna++) {
+                if ((tablero[fila][columna] != null)) {
+                        if (tablero[fila][columna].getReino()) {
+                            System.out.print("|X");
+                        }
+                        else {
+                            System.out.print("|O");
+                        }
+                }
+                else {
+                    if(fila==0){
+                        if(columna==0){
+                           System.out.print(" "+"\t "); 
+                        }
+                        else{
+                            System.out.print(convertir(columna)+" ");
+                        }
+                    }
+                    else if(columna==0){
+                        System.out.print(fila+"\t");
+                    }
+                    else{
+                        System.out.print("|_");
+                    }
+                }
+            }
+            if(fila!=0){
+                System.out.println("|");
+            }
+            else{
+                System.out.println("");
+            }
+        }
+    }
+
+    //mostrar los datos de un ejercito
+    public static void mostrar(Ejercito[] ejercito, int j) {
+        if(ejercito[j].getReino()){
+
+        }
+        System.out.println((j+1)+".\tFila: " + ejercito[j].getFila() + "\t"+ "Columna:" + ejercito[j].getColumna()+ "\t"+ "Reino:" + ejercito[j].getReino2());
+    }
+    //mostrar un arreglo de ejercitos
+    public static void mostrarEjercitos(Ejercito[]ejercitos){
+        for (int i=0;i<ejercitos.length;i++){
+            if(ejercitos[i]!=null){
+                mostrar(ejercitos, i);
+            }
+        }
+    }
     public static void main(String[] args) {
         //eleccion del reino
         String[]reinos={"Inglaterra", "Francia", "Sacro Imperio Romano Germánico",  "Castilla Aragón ", "Moros"};
@@ -27,7 +213,7 @@ public class Juego2 {
         System.out.println("El jugaro 1 ha elegido: "+reino1);
         System.out.println("Es turno de elegir del jugador 2, recuerde que no se puede usar el mismo ejercito.");
         int reinoJugador2;
-        String reino2;
+        String reino2;  
         do{
             reinoJugador2=elegirOpcion(reinos);
             reino2=reinos[reinoJugador2];
