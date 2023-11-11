@@ -592,5 +592,6 @@ public class Juego1 {
             System.out.println("Gana el jugador 1. El ejercito 2 ha sido eliminado");
         }
         //finbatalla
+        
     }
 }

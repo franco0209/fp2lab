@@ -8,6 +8,7 @@ public class Ejercito {
     private String reino2;
     private ArrayList<Soldado> misSoldados=new ArrayList<>();
     private int numInicialSoldados;
+    private int sumaDeVidas;
     //datos actualizables en tiempo de ejecucion del propio ejercito
     public static int numSoldados;
     //datos generales
@@ -58,6 +59,7 @@ public class Ejercito {
             Soldado soldadito=new Soldado(("Soldado"+i),(((int) (Math.random() * 5)) + 1),(((int) (Math.random() * 5)) + 1),(((int) (Math.random() * 5)) + 1));
             misSoldados.add(soldadito);
         }
+        sumarVidas();
     }
     public void generarSoldadosManual(){
         Scanner scan=new Scanner(System.in);
@@ -105,6 +107,13 @@ public class Ejercito {
     public String getReino2() {
         return reino2;
     }
+    public int getNumSoldados(){
+        return numInicialSoldados;
+    }
+    public int getSumaVidas(){
+        return sumaDeVidas;
+    }
+
     public void tooString(){
         System.out.println("Reino: "+reino2+"\nNúmero de soldados: "+numSoldados+"\nSoldados:");
         int i=1;
@@ -112,8 +121,19 @@ public class Ejercito {
             System.out.println(i+" . Nombre: "+soldado.getNombre()+"Vida: "+soldado.getVida()+"Nivel de ataque: "+soldado.getNivelAtaque()+" Nivel de defensa" +soldado.getNivelDefensa());
             i++;
         }
-
     }
+    public void plusTerritorio(){
+        for(int i=0;i<misSoldados.size();i++){
+            misSoldados.get(i).setVida((misSoldados.get(i).getVida())+1);
+        }
+        sumarVidas();
+    }
+    public void sumarVidas(){
+        for(int i=0;i<misSoldados.size();i++){
+            sumaDeVidas=sumaDeVidas+(misSoldados.get(i).getVida());
+        }
+    }
+
 
 
 }
