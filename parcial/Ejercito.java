@@ -84,6 +84,7 @@ public class Ejercito {
             while (def>5||def<1);
             misSoldados.add(new Soldado(nom,vid,atq,def));
         }
+        sumarVidas();
     }
 
     //Métodos accesores
@@ -129,6 +130,7 @@ public class Ejercito {
         sumarVidas();
     }
     public void sumarVidas(){
+        sumaDeVidas=0;
         for(int i=0;i<misSoldados.size();i++){
             sumaDeVidas=sumaDeVidas+(misSoldados.get(i).getVida());
         }

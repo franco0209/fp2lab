@@ -183,7 +183,7 @@ public class Mapa {
         String[]territorios={"Bosque", "Campo abierto", "Montaña","Desierto", "Playa"};
         if(territorio.equals(territorios[0])){
             if(reino.equals(reinos[0])||reino.equals(reinos[2])){
-                System.out.println(reino+ "obtiene un beneficio de territorio.");
+                System.out.println(reino+ " obtiene un beneficio de territorio.");
                 return true;
             }
         }
@@ -210,9 +210,6 @@ public class Mapa {
                 System.out.println(reino+ "obtiene un beneficio de territorio.");
                 return true;
             }
-        }
-        else{
-            return false;
         }
         return false;
     }
