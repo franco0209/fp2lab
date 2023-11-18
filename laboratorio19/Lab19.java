@@ -1,19 +1,7 @@
 import java.util.*;
 
-public class Lab18 {
-    public static void batalla(Ejercito elEjercito1,Ejercito elEjercito2){
-        int suma1 =elEjercito1.getSumaVidas();
-        int suma2 =elEjercito2.getSumaVidas();
-        if(suma1>suma2){
-            System.out.println(Atajos.BLUE+"Gana el ejército 1, con "+suma1+" puntos de vida."+Atajos.RESET);
-        }
-        else if(suma2>suma1){
-            System.out.println(Atajos.RED+"Gana el ejército 2, con "+suma2+" puntos de vida."+Atajos.RESET);
-        }
-        else{
-            System.out.println(Atajos.RED+"RESULTADO: "+Atajos.BLUE+" EMPATE."+Atajos.RESET);
-        }
-    }    
+public class Lab19 {
+    
     public static void main(String[] args) {
         Scanner scan=new Scanner(System.in);
         while(true){
@@ -53,11 +41,7 @@ public class Lab18 {
                         }
                     }
             }
-            ejercito1.ordenarEjercito();
-            ejercito2.ordenarEjercito();
-            System.out.println("Ejercito 1 (ordenado)");
             ejercito1.mostrarDatos();
-            System.out.println("Ejercito 2 (ordenado)");
             ejercito2.mostrarDatos();
             //rellenar el tablero bidimensional
             Soldado tableroSoldados[][]=new Soldado[11][11];
@@ -68,7 +52,8 @@ public class Lab18 {
             }
             //fin relleno tablero
             Soldado.imprimirTablero(tableroSoldados);
-            batalla(ejercito1, ejercito2);
+            
+            System.out.println(ejercitos);
             //Secuencia de control
             System.out.println("¿ Desea generar otra batalla ? (s/n)");
             String control=(scan.next()).toLowerCase();
@@ -77,5 +62,6 @@ public class Lab18 {
             }
 
         }
+            
     }        
 }
