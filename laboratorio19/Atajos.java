@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Atajos {
@@ -40,6 +41,26 @@ public class Atajos {
     public static String convertir(int numero){
         String[] letras = {" ", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J" };
         return letras[numero];
+    }
+    //intercambiar soldados
+    public static void intercambiar(ArrayList<Soldado>soldados, int i, int j) {
+        Soldado temp = new Soldado();
+        temp = soldados.get(i);
+        soldados.set(i, soldados.get(j));
+        soldados.set(j, temp);
+    }
+    //fila
+    public static int fila() {
+        Scanner scan = new Scanner(System.in);
+        System.out.println("Ingrese la fila:");
+        return scan.nextInt();
+    }
+    
+    //columna
+    public static int columna() {
+        Scanner scan = new Scanner(System.in);
+        System.out.println("Ingrese la columna:");
+        return convertir(scan.next());
     }
     
 }

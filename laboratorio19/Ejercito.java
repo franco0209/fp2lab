@@ -13,7 +13,7 @@ public class Ejercito {
     public static int totalEjercitos;
     public static int totalEjercitos1;
     public static int totalEjercitos2;  
-    public static final int maxEjercitos=10;
+    public static final int maxEjercitos=3;
     public static int totalSoldados;
     public static int totalSoldados1;
     public static int totalSoldados2;  
@@ -50,6 +50,7 @@ public class Ejercito {
             soldadoParcial.setNombre(soldadoParcial.getNombre()+i+"X"+numDeEjercito);
             misSoldados.add(soldadoParcial);
         }
+        sumarVidas();
     }
    
     public void setFila(int f) {
@@ -66,6 +67,9 @@ public class Ejercito {
 
     public void addSoldado(Soldado soldado){
         misSoldados.add(soldado);
+    }
+    public void setArrayPrivate(ArrayList<Soldado> soldados){
+        misSoldados=soldados;
     }
 
     //Métodos accesores
@@ -97,12 +101,15 @@ public class Ejercito {
     }
     //Métodos adicionales
     public ArrayList<Soldado> arregloAuxiliar(){
-        ArrayList<Soldado> auxiliar=(ArrayList<Soldado>) misSoldados.clone();;
+        ArrayList<Soldado> auxiliar=(ArrayList<Soldado>) misSoldados.clone();
         return auxiliar;
     }
     public void mostrarDatos(){
         for(int i=0;i<misSoldados.size();i++){
             misSoldados.get(i).mostrarDatos();
         }
+    }
+    public void ordenarEjercito(){
+        Soldado.ordenarArray(misSoldados);
     }
 }

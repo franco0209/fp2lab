@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class Soldado {
 
     //Atributos de la clase
@@ -116,5 +118,21 @@ public class Soldado {
                 System.out.println("");
             }
         }  
+    }
+    //mostrar datos de un ArrayList
+    public static void mostrarDatosSol(ArrayList<Soldado>soldados){
+        for(int i=0;i<soldados.size();i++){
+            soldados.get(i).mostrarDatos();
+        }
+    }
+    //ordenar un ArrayListe
+    public static void ordenarArray(ArrayList<Soldado>soldados){
+        for (int i = 1; i < soldados.size(); i++) {
+            for (int j = 0; j < soldados.size() - i; j++) {
+                if ((soldados.get(j).getVida()) < (soldados.get(j+1).getVida())) {
+                    Atajos.intercambiar(soldados, j, j + 1);
+                }
+            }
+        }        
     }
 }
