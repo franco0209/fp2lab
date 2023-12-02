@@ -54,11 +54,10 @@ public class Atajos {
         Scanner scan = new Scanner(System.in);
         try {
             System.out.println("Ingrese la fila:");
-            return scan.nextInt(); 
-        } catch (Exception InputMismatchException) {
-            fila();
-        }
-        return 2;        
+            return scan.nextInt();
+        } catch (Exception e) {
+            return fila();
+        }  
     }
     
     //columna
